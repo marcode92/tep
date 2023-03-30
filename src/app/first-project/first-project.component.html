@@ -1,0 +1,21 @@
+<input #fileInput type="file" (change)="onFileChange($event)" multiple="false" (change)="onChange($event)" />
+<!-- <table class="sjs-table">
+  <tbody>
+    <tr *ngFor="let row of data">
+			<td *ngFor="let val of row">
+        {{val}}
+			</td>
+		</tr>
+  </tbody>
+</table> -->
+<button (click)="export()">Export!</button>
+<div>
+<mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <mat-select [formControl]="nameControl">
+      <mat-option *ngFor="let name of names" [value]="names">
+        {{name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
