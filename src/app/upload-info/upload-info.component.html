@@ -1,13 +1,5 @@
 <input #fileInput type="file" (change)="onFileChange($event)" multiple="false" (change)="onChange($event)" />
-<!-- <table class="sjs-table">
-  <tbody>
-    <tr *ngFor="let row of data">
-			<td *ngFor="let val of row">
-        {{val}}
-			</td>
-		</tr>
-  </tbody>
-</table> -->
+
 <button (click)="export()">Export!</button>
 <div>
 <mat-form-field appearance="fill">

@@ -7,11 +7,12 @@ import { FormControl } from '@angular/forms';
 type AOA = any[][];
 
 @Component({
-  selector: 'app-first-project',
-  templateUrl: './first-project.component.html',
-  styleUrls: ['./first-project.component.scss']
+  selector: 'app-upload-info',
+  templateUrl: './upload-info.component.html',
+  styleUrls: ['./upload-info.component.scss']
 })
-export class FirstProjectComponent {
+export class UploadInfoComponent {
+
   @ViewChild('fileInput', {static: false}) fileInput?: ElementRef;
 
   nameControl = new FormControl('');

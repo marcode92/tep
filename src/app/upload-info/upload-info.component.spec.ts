@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FirstProjectComponent } from './first-project.component';
+import { UploadInfoComponent } from './upload-info.component';
 
-describe('FirstProjectComponent', () => {
-  let component: FirstProjectComponent;
-  let fixture: ComponentFixture<FirstProjectComponent>;
+describe('UploadInfoComponent', () => {
+  let component: UploadInfoComponent;
+  let fixture: ComponentFixture<UploadInfoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FirstProjectComponent ]
+      declarations: [ UploadInfoComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FirstProjectComponent);
+    fixture = TestBed.createComponent(UploadInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,16 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FirstProjectComponent } from './first-project/first-project.component';
 import {MatSelectModule} from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UploadInfoComponent } from './upload-info/upload-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FirstProjectComponent,
+    UploadInfoComponent,
   ],
   imports: [
     BrowserModule,
