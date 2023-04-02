@@ -1,7 +1,6 @@
 import * as XLSX from 'xlsx';
-const { read, write, utils } = XLSX;
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IReadFile } from './ITep';
+import { IReadFile, ISheetMonths } from './ITep';
 import _ from 'lodash';
 import { FormControl } from '@angular/forms';
 type AOA = any[][];
@@ -17,12 +16,13 @@ export class UploadInfoComponent {
 
   nameControl = new FormControl('');
 
-  row: IReadFile[] = [];
+  row: ISheetMonths[] = [];
   data: AOA = [];
   wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = 'SheetJS.xlsx';
   names: string[] = [];
-  
+  wsname: string[] = [];
+
   onChange(evt: any){
     this.fileInput!.nativeElement.value = null;
   }
@@ -36,68 +36,114 @@ export class UploadInfoComponent {
       /* read workbook */
       const bstr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
-
-      /* grab first sheet */
-      const wsname: string = wb.SheetNames[0];
-      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-
-      /* save data */
-      this.data = <AOA>(XLSX.utils.sheet_to_json(ws, { header: 1 }));
       
-      this.searchByName();
+      const ws: XLSX.WorkSheet[] = [];
+      /* grab first sheet */
+      this.wsname = wb.SheetNames;
+
+      this.wsname.forEach((x,index) => {
+        ws.push(wb.Sheets[x]);
+        this.data.push(<AOA>(XLSX.utils.sheet_to_json(ws[index], { header: 1 })));
+      })
+      /* save data */
+      
+      this.mapFiletoRow();
     };
     reader.readAsBinaryString(target.files[0]);
   }
 
-  searchByName(){
-    this.data.forEach((x,index) => {
-      if(index !== 0){
+  mapFiletoRow(){
+    this.data.forEach((sheet,i) =>{
       this.row.push({
-        name:x[0],
-        residuoMesiPrecFeriali:x[1],
-        residuoMesiPrecFestivi:x[2],
-        residuoMesiPrecNonFestivi:x[3],
-        lavorateFeriali:x[4],
-        lavorateFestivi:x[5],
-        lavorateNonFestivi:x[6],
-        totaleFeriali:x[7],
-        totaleFestivi:x[8],
-        totaleNonFestivi:x[9],
-        pagateFeriali:x[10],
-        pagateFestivi:x[11],
-        pagateNonFestivi:x[12],
-        pagateOreFeriali:x[13],
-        pagateOreFestivi:x[14],
-        pagateOreNonFestivi:x[15],
-        residuoCorrenteFeriali:x[16],
-        residuoCorrenteFestivi:x[17],
-        residuoCorrenteNonFestivi:x[18],   
+        mese:this.wsname[i],
+        sheet: this.mapSheetMonth(sheet),
       })
-    }      
-    })    
-  }
-
-  calculate(){
-    this.row.forEach(x => {
-      x.totaleFeriali = x.lavorateFeriali !== undefined && x.residuoMesiPrecFeriali !== undefined? x.lavorateFeriali+x.residuoMesiPrecFeriali : 0,
-      x.totaleFestivi = x.lavorateFestivi !== undefined && x.residuoMesiPrecFestivi !== undefined? x.lavorateFestivi+x.residuoMesiPrecFestivi : 0,
-      x.totaleNonFestivi = x.lavorateNonFestivi !== undefined && x.residuoMesiPrecNonFestivi !== undefined? x.lavorateNonFestivi+x.residuoMesiPrecNonFestivi: 0
-
-      x.pagateOreFeriali = x.pagateFeriali && x.pagateFeriali/60;
-      x.pagateOreFestivi = x.pagateFestivi && x.pagateFestivi/60;
-      x.pagateOreNonFestivi = x.pagateNonFestivi && x.pagateNonFestivi/60;
-
-      x.residuoCorrenteFeriali = x.totaleFeriali !== undefined && x.pagateFeriali !== undefined ? x.totaleFeriali-x.pagateFeriali : 0;
-      x.residuoCorrenteFestivi = x.totaleFestivi !== undefined && x.pagateFestivi !== undefined ? x.totaleFestivi-x.pagateFestivi : 0; 
-      x.residuoCorrenteNonFestivi = x.totaleNonFestivi !== undefined && x.pagateNonFestivi !== undefined? x.totaleNonFestivi-x.pagateNonFestivi : 0;
     })
-
     console.log(this.row)
   }
 
-  export(): void {
+  mapSheetMonth(sheet: any[]): IReadFile[]{
+    let sheetMap: IReadFile[] = [];
+    sheet.forEach((col,index) =>{
+      if(index !== 0){
+      sheetMap.push({
+        name:col[0],
+        residuoMesiPrecFeriali:col[1],
+        residuoMesiPrecFestivi:col[2],
+        residuoMesiPrecNonFestivi:col[3],
+        lavorateFeriali:col[4],
+        lavorateFestivi:col[5],
+        lavorateNonFestivi:col[6],
+        totaleFeriali:col[7],
+        totaleFestivi:col[8],
+        totaleNonFestivi:col[9],
+        pagateFeriali:col[10],
+        pagateFestivi:col[11],
+        pagateNonFestivi:col[12],
+        pagateOreFeriali:col[13],
+        pagateOreFestivi:col[14],
+        pagateOreNonFestivi:col[15],
+        residuoCorrenteFeriali:col[16],
+        residuoCorrenteFestivi:col[17],
+        residuoCorrenteNonFestivi:col[18], 
+      })
+    }
+    })
 
-    this.data.forEach((x,index) => {
+    return sheetMap;
+  }
+
+  calculate(){
+    let residuoPrecFeriali = 0;
+    let residuoPrecFestivi = 0;
+    let residuoPrecNonFestivi = 0;
+    this.row.forEach((sheets, index) => {
+      if(sheets && sheets.sheet){
+        sheets.sheet.forEach(element => {          
+          element.residuoMesiPrecFeriali = 
+          sheets.mese && sheets.mese.toLowerCase() === 'gennaio' ? 0 : residuoPrecFeriali
+          element.residuoMesiPrecFestivi = 
+          sheets.mese && sheets.mese.toLowerCase() === 'gennaio' ? 0 : residuoPrecFestivi
+          element.residuoMesiPrecNonFestivi = 
+          sheets.mese && sheets.mese.toLowerCase() === 'gennaio' ? 0 : residuoPrecNonFestivi
+          
+          element.totaleFeriali = 
+            element.lavorateFeriali !== undefined && element.residuoMesiPrecFeriali !== undefined? element.lavorateFeriali+residuoPrecFeriali : 0,
+          element.totaleFestivi = 
+            element.lavorateFestivi !== undefined && element.residuoMesiPrecFestivi !== undefined? element.lavorateFestivi+element.residuoMesiPrecFestivi : 0,
+          element.totaleNonFestivi = 
+            element.lavorateNonFestivi !== undefined && element.residuoMesiPrecNonFestivi !== undefined? element.lavorateNonFestivi+element.residuoMesiPrecNonFestivi: 0
+          
+          element.pagateOreFeriali = element.pagateFeriali && element.pagateFeriali/60;
+          element.pagateOreFestivi = element.pagateFestivi && element.pagateFestivi/60;
+          element.pagateOreNonFestivi = element.pagateNonFestivi && element.pagateNonFestivi/60;
+          
+          element.residuoCorrenteFeriali = 
+            element.totaleFeriali !== undefined && element.pagateFeriali !== undefined ? element.totaleFeriali-element.pagateFeriali : 0;
+          element.residuoCorrenteFestivi = 
+            element.totaleFestivi !== undefined && element.pagateFestivi !== undefined ? element.totaleFestivi-element.pagateFestivi : 0; 
+          element.residuoCorrenteNonFestivi = 
+            element.totaleNonFestivi !== undefined && element.pagateNonFestivi !== undefined? element.totaleNonFestivi-element.pagateNonFestivi : 0;
+            
+          residuoPrecFeriali = sheets.sheet && sheets.sheet[index].residuoCorrenteFeriali || 0
+          residuoPrecFestivi = sheets.sheet && sheets.sheet[index].residuoCorrenteFestivi || 0
+          residuoPrecNonFestivi = sheets.sheet && sheets.sheet[index].residuoCorrenteNonFestivi || 0
+        });
+    }
+    })
+
+    console.log(this.row);
+  }
+
+  export() {
+
+  this.row.forEach(x =>{
+    this.data.forEach(y =>{
+      y[0]
+    })
+  })
+      console.log(this.data);
+/* 
       if(index !== 0){
       x[0] = this.row[index-1].name;
       x[1] = this.row[index-1].residuoMesiPrecFeriali;
@@ -123,7 +169,7 @@ export class UploadInfoComponent {
       x[16] = this.row[index-1].residuoCorrenteFeriali;
       x[17] = this.row[index-1].residuoCorrenteFestivi;
       x[18] = this.row[index-1].residuoCorrenteNonFestivi;
-      }
+      } */
     }) 
     
     /* generate worksheet */

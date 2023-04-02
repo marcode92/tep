@@ -18,5 +18,9 @@ export interface IReadFile{
     residuoCorrenteFeriali?: number;
     residuoCorrenteFestivi?: number;
     residuoCorrenteNonFestivi?: number;
+}
 
+export interface ISheetMonths {
+    mese?: string;
+    sheet?: IReadFile[];
 }
