@@ -17,7 +17,7 @@ export class UploadInfoComponent {
 
   nameControl = new FormControl('');
 
-  row: IReadFile = {};
+  row: IReadFile[] = [];
   data: AOA = [];
   wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = 'SheetJS.xlsx';
@@ -43,7 +43,7 @@ export class UploadInfoComponent {
 
       /* save data */
       this.data = <AOA>(XLSX.utils.sheet_to_json(ws, { header: 1 }));
-      this.data = _.zip.apply(_, this.data);
+      
       this.searchByName();
      
 
@@ -52,8 +52,35 @@ export class UploadInfoComponent {
   }
 
   searchByName(){
-    
-    this.names = this.data[0].slice(1,this.data[0].length)
+    this.data.forEach(x => {
+      this.row.push({
+        name:x[0],
+        residuoMesiPrecFeriali:x[1],
+        residuoMesiPrecFestivi:x[2],
+        residuoMesiPrecNonFestivi:x[3],
+        lavorateFeriali:x[4],
+        lavorateFestivi:x[5],
+        lavorateNonFestivi:x[6],
+        totaleFeriali:x[7],
+        totaleFestivi:x[8],
+        totaleNonFestivi:x[9],
+        pagateFeriali:x[10],
+        pagateFestivi:x[11],
+        pagateNonFestivi:x[12],
+        pagateOreFeriali:x[13],
+        pagateOreFestivi:x[14],
+        pagateOreNonFestivi:x[15],
+        residuoCorrenteFeriali:x[16],
+        residuoCorrenteFestivi:x[17],
+        residuoCorrenteNonFestivi:x[18],   
+      })      
+    })    
+  }
+
+  calculate(){
+    this.row.forEach(x => {
+      x.totaleFeriali = x.lavorateFeriali && x.residuoMesiPrecFeriali && x.lavorateFeriali+x.residuoMesiPrecFeriali
+    })
   }
 
   export(): void {
