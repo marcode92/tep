@@ -33,6 +33,23 @@ export class TepCalculateComponent implements OnInit {
     rmCurrNonFestivo: new FormControl(),
   }); 
 
+  get monthCtrl(){
+    return this.strForm.controls['monthCtrl']
+  }
+
+  get rmpFestivo(){
+    return this.strForm.controls['rmpFestivo']
+  }
+  
+  get rmpFeriale(){
+    return this.strForm.controls['rmpFeriale']
+  }
+
+  get rmpNonFestivo(){
+    return this.strForm.controls['rmpNonFestivo']
+  }
+
+
   constructor(){
 
   }  
@@ -50,5 +67,17 @@ export class TepCalculateComponent implements OnInit {
 
   upload(){
     console.log("here");
+  }
+
+  calculate(){
+    if(this.monthCtrl.value.toLowerCase() === 'jan'){
+      this.rmpFestivo.setValue(0);
+      this.rmpNonFestivo.setValue(0);
+      this.rmpFeriale.setValue(0);
+    } else {
+      //api upload dato
+    }
+
+    
   }
 }

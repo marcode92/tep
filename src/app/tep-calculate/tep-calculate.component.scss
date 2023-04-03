@@ -1,3 +1,9 @@
 .container {
-    margin:12px;
+    margin:12px;   
+}
+
+.button-bar {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end; 
 }

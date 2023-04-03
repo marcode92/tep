@@ -1,133 +1,118 @@
 <div class="container">
-<form [formGroup]="strForm">
-    <div>MESE:</div>
-    <mat-form-field appearance="fill" class="container">
-        <mat-label>Seleziona mese </mat-label>
-        <mat-select formControlName="monthCtrl">
-          <mat-option *ngFor="let month of months" >
-            {{ month }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    <div>VIGILI:</div>
- <mat-form-field class="container">
-    <mat-label>Nome vigile</mat-label>
-    <input matInput id="name" type="text" formControlName="nameCtrl">
-</mat-form-field>
-<div> RESIDUO MESE PRECEDENTE:</div>
-<mat-form-field class="container">
-    <mat-label>Festivi</mat-label>
-    <input matInput type="text" formControlName="rmpFestivo">
-</mat-form-field>
+    <form [formGroup]="strForm">
+        <div>MESE:</div>
+        <mat-form-field appearance="fill" class="container">
+            <mat-label>Seleziona mese </mat-label>
+            <mat-select formControlName="monthCtrl" >
+                <mat-option *ngFor="let month of months" [value]="month">
+                    {{ month }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div>VIGILI:</div>
+        <mat-form-field class="container">
+            <mat-label>Nome vigile</mat-label>
+            <input matInput id="name" type="text" formControlName="nameCtrl">
+        </mat-form-field>
+        <div> RESIDUO MESE PRECEDENTE:</div>
+        <mat-form-field class="container">
+            <mat-label>Festivi</mat-label>
+            <input readonly matInput type="text" formControlName="rmpFestivo">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Feriali</mat-label>
-    <input matInput type="text" formControlName="rmpFeriale">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Feriali</mat-label>
+            <input readonly matInput type="text" formControlName="rmpFeriale">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Non Festivi</mat-label>
-    <input matInput type="text" formControlName="rmpNonFestivo">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Non Festivi</mat-label>
+            <input readonly matInput type="text" formControlName="rmpNonFestivo">
+        </mat-form-field>
 
-<div> LAVORATE:</div>
-<mat-form-field class="container" >
-    <mat-label>Festivi</mat-label>
-    <input matInput type="text" formControlName="lavFestivo">
-</mat-form-field>
+        <div> LAVORATE:</div>
+        <mat-form-field class="container">
+            <mat-label>Festivi</mat-label>
+            <input matInput type="text" formControlName="lavFestivo">
+        </mat-form-field>
 
-<mat-form-field class="container" >
-    <mat-label>Feriali</mat-label>
-    <input matInput type="text" formControlName="lavFeriale">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Feriali</mat-label>
+            <input matInput type="text" formControlName="lavFeriale">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Non Festivi</mat-label>
-    <input matInput type="text" formControlName="lavNonFestivo">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Non Festivi</mat-label>
+            <input matInput type="text" formControlName="lavNonFestivo">
+        </mat-form-field>
 
-<div> TOTALI:</div>
-<mat-form-field class="container">
-    <mat-label>Festivi</mat-label>
-    <input matInput type="text" formControlName="totFestivo">
-</mat-form-field>
+        <div> TOTALI:</div>
+        <mat-form-field class="container">
+            <mat-label>Festivi</mat-label>
+            <input readonly matInput type="text" formControlName="totFestivo">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Feriali</mat-label>
-    <input matInput type="text" formControlName="totFeriale">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Feriali</mat-label>
+            <input readonly matInput type="text" formControlName="totFeriale">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Non Festivi</mat-label>
-    <input matInput type="text" formControlName="totNonFestivo">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Non Festivi</mat-label>
+            <input readonly matInput type="text" formControlName="totNonFestivo">
+        </mat-form-field>
 
-<div> PAGATE:</div>
-<mat-form-field class="container">
-    <mat-label>Festivi</mat-label>
-    <input matInput type="text" formControlName="payFestivo">
-</mat-form-field>
+        <div> PAGATE:</div>
+        <mat-form-field class="container">
+            <mat-label>Festivi</mat-label>
+            <input matInput type="text" formControlName="payFestivo">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Feriali</mat-label>
-    <input matInput type="text" formControlName="payFeriale">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Feriali</mat-label>
+            <input matInput type="text" formControlName="payFeriale">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Non Festivi</mat-label>
-    <input matInput type="text" formControlName="payNonFestivo">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Non Festivi</mat-label>
+            <input matInput type="text" formControlName="payNonFestivo">
+        </mat-form-field>
 
-<div> PAGATE:</div>
-<mat-form-field class="container">
-    <mat-label>Festivi</mat-label>
-    <input matInput type="text" formControlName="payFestivo">
-</mat-form-field>
+        <div> PAGATE IN ORE:</div>
+        <mat-form-field class="container">
+            <mat-label>Festivi</mat-label>
+            <input readonly matInput type="text" formControlName="payHFestivo">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Feriali</mat-label>
-    <input matInput type="text" formControlName="payFeriale">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Feriali</mat-label>
+            <input readonly matInput type="text" formControlName="payHFeriale">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Non Festivi</mat-label>
-    <input matInput type="text" formControlName="payNonFestivo">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Non Festivi</mat-label>
+            <input readonly matInput type="text" formControlName="payHNonFestivo">
+        </mat-form-field>
 
-<div> PAGATE IN ORE:</div>
-<mat-form-field class="container">
-    <mat-label>Festivi</mat-label>
-    <input matInput type="text" formControlName="payHFestivo">
-</mat-form-field>
+        <div> RESIDUO MESE CORRENTE:</div>
+        <mat-form-field class="container">
+            <mat-label>Festivi</mat-label>
+            <input readonly matInput type="text" formControlName="rmCurrFestivo">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Feriali</mat-label>
-    <input matInput type="text" formControlName="payHFeriale">
-</mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Feriali</mat-label>
+            <input readonly matInput type="text" formControlName="rmCurrFeriale">
+        </mat-form-field>
 
-<mat-form-field class="container">
-    <mat-label>Non Festivi</mat-label>
-    <input matInput type="text" formControlName="payHNonFestivo">
-</mat-form-field>
-
-<div> RESIDUO MESE CORRENTE:</div>
-<mat-form-field class="container">
-    <mat-label>Festivi</mat-label>
-    <input matInput type="text" formControlName="rmCurrFestivo">
-</mat-form-field>
-
-<mat-form-field class="container">
-    <mat-label>Feriali</mat-label>
-    <input matInput type="text" formControlName="rmCurrFeriale">
-</mat-form-field>
-
-<mat-form-field class="container">
-    <mat-label>Non Festivi</mat-label>
-    <input matInput type="text" formControlName="rmCurrNonFestivo">
-</mat-form-field>
-<div class="container">
-<button mat-raised-button color="accent"  (click) ="upload()">CARICA</button>
-<button mat-raised-button color="primary" (click) ="upload()">RESET</button>
-</div>
-</form>
+        <mat-form-field class="container">
+            <mat-label>Non Festivi</mat-label>
+            <input readonly = "true" matInput type="text" formControlName="rmCurrNonFestivo">
+        </mat-form-field>
+        <div>
+            <button mat-raised-button color="basic" class="container" (click)="calculate()">CALCOLA</button>
+            <button mat-raised-button color="primary" class="container" (click)="upload()">RESET FORM</button>
+            <button mat-raised-button color="basic" class="container" (click)="upload()">CARICA DATI</button>
+        </div>
+    </form>
 </div>
