@@ -8,11 +8,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UploadInfoComponent } from './upload-info/upload-info.component';
+import { TepCalculateComponent } from './tep-calculate/tep-calculate.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadInfoComponent,
+    TepCalculateComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,6 +28,10 @@ import { UploadInfoComponent } from './upload-info/upload-info.component';
     MatSelectModule,  
     FormsModule, 
     CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatButtonToggleModule,   
   ],
   providers: [],
   bootstrap: [AppComponent]

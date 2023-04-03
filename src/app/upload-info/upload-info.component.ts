@@ -94,6 +94,7 @@ export class UploadInfoComponent {
   }
 
   calculate(){
+    let precSheet: any;
     let residuoPrecFeriali = 0;
     let residuoPrecFestivi = 0;
     let residuoPrecNonFestivi = 0;
@@ -101,7 +102,7 @@ export class UploadInfoComponent {
       if(sheets && sheets.sheet){
         sheets.sheet.forEach(element => {          
           element.residuoMesiPrecFeriali = 
-          sheets.mese && sheets.mese.toLowerCase() === 'gennaio' ? 0 : residuoPrecFeriali
+          sheets.mese && sheets.mese.toLowerCase() === 'gennaio' ? 0 : this.findUser(precSheet, element.name)
           element.residuoMesiPrecFestivi = 
           sheets.mese && sheets.mese.toLowerCase() === 'gennaio' ? 0 : residuoPrecFestivi
           element.residuoMesiPrecNonFestivi = 
@@ -124,66 +125,68 @@ export class UploadInfoComponent {
             element.totaleFestivi !== undefined && element.pagateFestivi !== undefined ? element.totaleFestivi-element.pagateFestivi : 0; 
           element.residuoCorrenteNonFestivi = 
             element.totaleNonFestivi !== undefined && element.pagateNonFestivi !== undefined? element.totaleNonFestivi-element.pagateNonFestivi : 0;
-            
+            /* 
           residuoPrecFeriali = sheets.sheet && sheets.sheet[index].residuoCorrenteFeriali || 0
           residuoPrecFestivi = sheets.sheet && sheets.sheet[index].residuoCorrenteFestivi || 0
-          residuoPrecNonFestivi = sheets.sheet && sheets.sheet[index].residuoCorrenteNonFestivi || 0
+          residuoPrecNonFestivi = sheets.sheet && sheets.sheet[index].residuoCorrenteNonFestivi || 0 */
+
         });
+        precSheet = sheets.sheet;
     }
     })
 
     console.log(this.row);
   }
 
+  findUser(sheet: ISheetMonths[],name?: string){
+    console.log("foglio e name",sheet, name)
+    return 0; //TODO
+  }
+
   export() {
-
-  this.row.forEach(x =>{
-    this.data.forEach(y =>{
-      y[0]
-    })
-  })
-      console.log(this.data);
-/* 
-      if(index !== 0){
-      x[0] = this.row[index-1].name;
-      x[1] = this.row[index-1].residuoMesiPrecFeriali;
-      x[2] = this.row[index-1].residuoMesiPrecFestivi;
-      x[3] = this.row[index-1].residuoMesiPrecNonFestivi;
-
-      x[4] = this.row[index-1].lavorateFeriali;
-      x[5] = this.row[index-1].lavorateFestivi;
-      x[6] = this.row[index-1].lavorateNonFestivi;
-
-      x[7] = this.row[index-1].totaleFeriali;
-      x[8] = this.row[index-1].totaleFestivi;
-      x[9] = this.row[index-1].totaleNonFestivi;
-
-      x[10] = this.row[index-1].pagateFeriali;
-      x[11] = this.row[index-1].pagateFestivi;
-      x[12] = this.row[index-1].pagateNonFestivi;
-
-      x[13] = this.row[index-1].pagateOreFeriali;
-      x[14] = this.row[index-1].pagateOreFestivi;
-      x[15] = this.row[index-1].pagateOreNonFestivi;
-
-      x[16] = this.row[index-1].residuoCorrenteFeriali;
-      x[17] = this.row[index-1].residuoCorrenteFestivi;
-      x[18] = this.row[index-1].residuoCorrenteNonFestivi;
-      } */
-    }) 
     
     /* generate worksheet */
-    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.data);
-
-    var wscols = [{width:10},{width:25},{width:25},{width:25},{width:18},{width:18},
-      {width:18},{width:13},{width:13},{width:13},{width:13},{width:13},{width:13},
-      {width:20},{width:20},{width:20},{width:20},{width:20},{width:20}
-  ];
-  
-  ws['!cols'] = wscols;
-    /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    this.data.forEach((sheets,indexSheet) => {
+      sheets.forEach((x,index) => {
+        if(index !== 0){
+          x[0] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].name;
+          x[1] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].residuoMesiPrecFeriali;
+          x[2] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].residuoMesiPrecFestivi;
+          x[3] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].residuoMesiPrecNonFestivi;
+    
+          x[4] =this.row[indexSheet] && this.row[indexSheet].sheet![index-1].lavorateFeriali;
+          x[5] =this.row[indexSheet] && this.row[indexSheet].sheet![index-1].lavorateFestivi;
+          x[6] =this.row[indexSheet] && this.row[indexSheet].sheet![index-1].lavorateNonFestivi;
+    
+          x[7] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].totaleFeriali;
+          x[8] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].totaleFestivi;
+          x[9] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].totaleNonFestivi;
+    
+          x[10] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].pagateFeriali;
+          x[11] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].pagateFestivi;
+          x[12] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].pagateNonFestivi;
+    
+          x[13] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].pagateOreFeriali;
+          x[14] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].pagateOreFestivi;
+          x[15] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].pagateOreNonFestivi;
+    
+          x[16] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].residuoCorrenteFeriali;
+          x[17] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].residuoCorrenteFestivi;
+          x[18] = this.row[indexSheet] && this.row[indexSheet].sheet![index-1].residuoCorrenteNonFestivi;
+          }
+        })
+        const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(sheets);
+        
+        let wscols = [{width:10},{width:25},{width:25},{width:25},{width:18},{width:18},
+          {width:18},{width:13},{width:13},{width:13},{width:13},{width:13},{width:13},
+          {width:20},{width:20},{width:20},{width:20},{width:20},{width:20}
+        ];
+        
+        ws['!cols'] = wscols;
+        /* generate workbook and add the worksheet */
+        XLSX.utils.book_append_sheet(wb, ws, `${this.wsname[indexSheet]}`);
+    })
 
     /* save to file */
     XLSX.writeFile(wb, this.fileName);
