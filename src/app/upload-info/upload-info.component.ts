@@ -23,29 +23,25 @@ export class UploadInfoComponent {
   names: string[] = [];
   wsname: string[] = [];
 
-  onChange(evt: any){
+  /* onChange(evt: any){
     this.fileInput!.nativeElement.value = null;
   }
   
   onFileChange(evt: any) {
-    /* wire up file reader */
     const target: DataTransfer = <DataTransfer>(evt.target);
     if (target.files.length !== 1) throw new Error('Cannot use multiple files');
     const reader: FileReader = new FileReader();
     reader.onload = (e: any) => {
-      /* read workbook */
       const bstr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
       
       const ws: XLSX.WorkSheet[] = [];
-      /* grab first sheet */
       this.wsname = wb.SheetNames;
 
       this.wsname.forEach((x,index) => {
         ws.push(wb.Sheets[x]);
         this.data.push(<AOA>(XLSX.utils.sheet_to_json(ws[index], { header: 1 })));
       })
-      /* save data */
       
       this.mapFiletoRow();
     };
@@ -125,10 +121,10 @@ export class UploadInfoComponent {
             element.totaleFestivi !== undefined && element.pagateFestivi !== undefined ? element.totaleFestivi-element.pagateFestivi : 0; 
           element.residuoCorrenteNonFestivi = 
             element.totaleNonFestivi !== undefined && element.pagateNonFestivi !== undefined? element.totaleNonFestivi-element.pagateNonFestivi : 0;
-            /* 
+            
           residuoPrecFeriali = sheets.sheet && sheets.sheet[index].residuoCorrenteFeriali || 0
           residuoPrecFestivi = sheets.sheet && sheets.sheet[index].residuoCorrenteFestivi || 0
-          residuoPrecNonFestivi = sheets.sheet && sheets.sheet[index].residuoCorrenteNonFestivi || 0 */
+          residuoPrecNonFestivi = sheets.sheet && sheets.sheet[index].residuoCorrenteNonFestivi || 0
 
         });
         precSheet = sheets.sheet;
@@ -145,7 +141,6 @@ export class UploadInfoComponent {
 
   export() {
     
-    /* generate worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     this.data.forEach((sheets,indexSheet) => {
       sheets.forEach((x,index) => {
@@ -184,12 +179,10 @@ export class UploadInfoComponent {
         ];
         
         ws['!cols'] = wscols;
-        /* generate workbook and add the worksheet */
         XLSX.utils.book_append_sheet(wb, ws, `${this.wsname[indexSheet]}`);
     })
 
-    /* save to file */
     XLSX.writeFile(wb, this.fileName);
-  }
+  } */
 
 }

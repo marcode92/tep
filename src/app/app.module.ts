@@ -13,6 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { CrudService } from 'src/crud.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,9 +33,10 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatButtonToggleModule,   
+    MatButtonToggleModule,
+    HttpClientModule  
   ],
-  providers: [],
+  providers: [CrudService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

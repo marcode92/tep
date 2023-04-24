@@ -14,10 +14,14 @@
             <mat-label>Nome vigile</mat-label>
             <input matInput id="name" type="text" formControlName="nameCtrl">
         </mat-form-field>
+        <mat-form-field class="container">
+            <mat-label>Cognome vigile</mat-label>
+            <input matInput id="surname" type="text" formControlName="surnameCtrl">
+        </mat-form-field>
         <div> RESIDUO MESE PRECEDENTE:</div>
         <mat-form-field class="container">
             <mat-label>Festivi</mat-label>
-            <input readonly matInput type="text" formControlName="rmpFestivo">
+            <input readonly [disabled]="true" matInput type="text" formControlName="rmpFestivo">
         </mat-form-field>
 
         <mat-form-field class="container">
@@ -110,9 +114,9 @@
             <input readonly = "true" matInput type="text" formControlName="rmCurrNonFestivo">
         </mat-form-field>
         <div>
-            <button mat-raised-button color="basic" class="container" (click)="calculate()">CALCOLA</button>
-            <button mat-raised-button color="primary" class="container" (click)="upload()">RESET FORM</button>
-            <button mat-raised-button color="basic" class="container" (click)="upload()">CARICA DATI</button>
+            <button mat-raised-button color="basic" class="container" (click)="calculate()">CALCOLA E SALVA</button>
+            <button mat-raised-button color="primary" class="container" (click)="upload()">CREA NUOVO</button>
+            <button mat-raised-button color="basic" class="container" (click)="upload()">CREA EXCEL</button>
         </div>
     </form>
 </div>
